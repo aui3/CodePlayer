@@ -84,21 +84,25 @@
 		//toggle between html,css,js,reult which all belong to the class 'toggle'
 		$(".toggle").click(function(){
 
-			$(this).toggleClass("selected");
+			$(this).toggleClass("selected"); //toggles between the class i.e. click class selected, click again class deselected and so on..
 
 			var activeDiv= $(this).html();
-			//alert(activeDiv);
-			$("#"+activeDiv+"container").toggle();
+		
 
-			var showingDiv=$(".codeContainer").filter(function(){
+			$("#"+activeDiv+"container").toggle(); //toggle displaying this div...if it is visible and user clicks on its corresponding title it will dissapear
+			//similarly if it was invisible and user clicks on the the corresponding title, it will become visible 
 
-					return ($(this).css("display")!="none");
+			var showingDivs=$(".codeContainer").filter(function(){ //so we iterate over all the divs with .codeContainer class, and we want to filter them according to the function() and this functions returns if the css of that particular div is display none or not
+
+					return ($(this).css("display")!="none");  //for each class inside codecontainer class check to see if its css property display is none or not
 					//returns true if div is displayed
-			}).length;
+			});
+			var showingDiv=showingDivs.length; //measure the length of the array which will be equal  to the number of visible elements
 
-			//alert(showingDiv);
 
-			var width=100/showingDiv;
+			//alert(showingDivs);
+
+			var width=100/showingDiv; //showing div will be a count of all the classes that pass the above filter i.e. are visible
 			$(".codeContainer").css("min-width", width+"%");
 		});
 		//contents() searches without the contents of the element
