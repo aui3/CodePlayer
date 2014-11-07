@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"  href="css/bootstrap.min.css">
+	<link rel="stylesheet"  href="css/main.css">
+	<link rel="stylesheet"  href="http://fonts.googleapis.com/css?family=Lato	:100,300">
+	<script src="bootstrap/js/jquery-2.1.1.min.js"></script> 
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+		<title>
+		Code Player
+
+ 	</title>
+
+</head>
+
+<body>
+	<div class="container-fluid">
+	
+		<div  id="menuBar" class="row menu">
+			<div  id="logo" class="col-md-3 logo"> CodePlayer
+			</div>
+		
+			<div id= "toggles" class="col-md-6" > 
+				<ul class="list-unstyled list-inline toggles">
+					<li class="toggle selected">HTML</li><li class="toggle">CSS</li><li class="toggle">JS</li><li class="toggle selected">RESULT</li>
+				</ul>
+			</div>
+
+			<div id="run-button1" class="col-md-3 run">
+				<button id="run-button" > Run </button>
+			</div>	
+		</div>
+
+			
+		<div id="HTMLcontainer" class="col-md-3 code codeContainer">
+			<div class="codeLabel">HTML</div>
+
+			<textarea id="HTMLTextArea" class="codetxt">Sample Code </textarea> 
+
+		</div>
+		
+		<div id="CSScontainer" class="col-md-3 css codeContainer">
+			<div  class="codeLabel">CSS</div>
+
+			<textarea id="CSSTextArea" class="codetxt">Sample CSS </textarea> 
+
+		</div>
+
+
+		<div id="JScontainer" class="col-md-3 js codeContainer">
+			<div  class="codeLabel">JS</div>
+
+			<textarea id="JSTextArea" class="codetxt">Sample JS </textarea> 
+		</div>
+		
+		<div id="RESULTcontainer" class="col-md-3 result codeContainer">
+			<div class="codeLabel">RESULT</div>
+			<iframe class="frame" ></iframe>
+			</div>			
+		</div>
+		
+
+	</div>
+	<script type="text/javascript">
+		
+		//calculate the height of the window remaining - the height of the menu bar on to 
+		//and set that to the height of the divs for html,css ,js and result
+		var windowHeight=$(window).height();
+		
+		var menuBarHeight=$("#menuBar").height();
+		
+		var codeContainerHeight= windowHeight - menuBarHeight;
+		
+		$("#HTMLcontainer").height(codeContainerHeight+"px");
+		$("#CSScontainer").height(codeContainerHeight+"px");
+		$("#JScontainer").height(codeContainerHeight+"px");
+		$("#RESULTcontainer").height(codeContainerHeight+"px");
+
+
+		//toggle between html,css,js,reult which all belong to the class 'toggle'
+		$(".toggle").click(function(){
+
+			$(this).toggleClass("selected");
+
+			var activeDiv= $(this).html();
+			//alert(activeDiv);
+			$("#"+activeDiv+"container").toggle();
+
+			var showingDiv=$(".codeContainer").filter(function(){
+
+					return ($(this).css("display")!="none");
+					//returns true if div is displayed
+			}).length;
+
+			//alert(showingDiv);
+
+			var width=100/showingDiv;
+			$(".codeContainer").css("min-width", width+"%");
+		});
+		//contents() searches without the contents of the element
+		$("#run-button").click(function(){
+
+				
+				$("iframe").contents().find("html").html(
+					'<style>'+ $("#CSSTextArea").val() +     '</style>'+ $("#HTMLTextArea").val());
+
+		});
+
+	</script>
+
+</body>
+
+</html>
